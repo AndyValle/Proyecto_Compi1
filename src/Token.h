@@ -23,10 +23,16 @@ enum class TokenType {
     CHAR,
     STR,
 
-    // Identificadores y valores
+    // Valores booleanos
+    TRUE,
+    FALSE,
+
+    // Identificadores y literales
     IDENTIFIER,
     INTEGER,
     DECIMAL,
+    STRING_LITERAL,
+    CHAR_LITERAL,
 
     // Operadores aritmeticos
     PLUS,
@@ -48,7 +54,7 @@ enum class TokenType {
     LESS_EQUAL,
     GREATER_EQUAL,
 
-    // Flecha para funciones
+    // Flecha de retorno de funciones
     ARROW,
 
     // Delimitadores
@@ -65,19 +71,21 @@ enum class TokenType {
     SEMICOLON,
     COLON,
 
-    // Fin del archivo
+    // Control
     END_OF_FILE,
 
-    // Token no reconocido
-    UNKNOWN
+    // Errores
+    UNKNOWN,
+    ERROR
 };
+
 
 struct Token {
 
     TokenType tipo;
     string lexema;
 
-    Token(TokenType tipo, string lexema) {
+    Token(TokenType tipo, const string& lexema) {
         this->tipo = tipo;
         this->lexema = lexema;
     }

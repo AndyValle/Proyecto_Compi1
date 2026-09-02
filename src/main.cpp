@@ -1,3 +1,4 @@
+
 #include <iostream>
 #include <string>
 #include <vector>
@@ -7,10 +8,16 @@
 using namespace std;
 
 
-// Funcion para convertir el tipo de token a texto
+// ==================================================
+// CONVERTIR TOKEN A TEXTO
+// ==================================================
+
 string tokenTypeToString(TokenType tipo) {
 
     switch (tipo) {
+
+
+        // Palabras reservadas
 
         case TokenType::LET:
             return "LET";
@@ -34,6 +41,8 @@ string tokenTypeToString(TokenType tipo) {
             return "RETURN";
 
 
+        // Tipos
+
         case TokenType::I32:
             return "I32";
 
@@ -50,6 +59,17 @@ string tokenTypeToString(TokenType tipo) {
             return "STR";
 
 
+        // Booleanos
+
+        case TokenType::TRUE:
+            return "TRUE";
+
+        case TokenType::FALSE:
+            return "FALSE";
+
+
+        // Identificadores y literales
+
         case TokenType::IDENTIFIER:
             return "IDENTIFIER";
 
@@ -59,6 +79,14 @@ string tokenTypeToString(TokenType tipo) {
         case TokenType::DECIMAL:
             return "DECIMAL";
 
+        case TokenType::STRING_LITERAL:
+            return "STRING_LITERAL";
+
+        case TokenType::CHAR_LITERAL:
+            return "CHAR_LITERAL";
+
+
+        // Operadores aritmeticos
 
         case TokenType::PLUS:
             return "PLUS";
@@ -73,6 +101,8 @@ string tokenTypeToString(TokenType tipo) {
             return "DIVIDE";
 
 
+        // Operadores logicos
+
         case TokenType::AND:
             return "AND";
 
@@ -82,6 +112,8 @@ string tokenTypeToString(TokenType tipo) {
         case TokenType::NOT:
             return "NOT";
 
+
+        // Asignacion y comparacion
 
         case TokenType::ASSIGN:
             return "ASSIGN";
@@ -105,9 +137,13 @@ string tokenTypeToString(TokenType tipo) {
             return "GREATER_EQUAL";
 
 
+        // Flecha
+
         case TokenType::ARROW:
             return "ARROW";
 
+
+        // Delimitadores
 
         case TokenType::LEFT_PAREN:
             return "LEFT_PAREN";
@@ -115,20 +151,17 @@ string tokenTypeToString(TokenType tipo) {
         case TokenType::RIGHT_PAREN:
             return "RIGHT_PAREN";
 
-
         case TokenType::LEFT_BRACE:
             return "LEFT_BRACE";
 
         case TokenType::RIGHT_BRACE:
             return "RIGHT_BRACE";
 
-
         case TokenType::LEFT_BRACKET:
             return "LEFT_BRACKET";
 
         case TokenType::RIGHT_BRACKET:
             return "RIGHT_BRACKET";
-
 
         case TokenType::COMMA:
             return "COMMA";
@@ -140,12 +173,19 @@ string tokenTypeToString(TokenType tipo) {
             return "COLON";
 
 
+        // Final
+
         case TokenType::END_OF_FILE:
             return "EOF";
 
 
+        // Errores
+
         case TokenType::UNKNOWN:
             return "UNKNOWN";
+
+        case TokenType::ERROR:
+            return "ERROR";
     }
 
 
@@ -153,9 +193,16 @@ string tokenTypeToString(TokenType tipo) {
 }
 
 
+// ==================================================
+// MAIN
+// ==================================================
+
 int main() {
 
-    // Codigo Rust que vamos a analizar
+    /*
+        Codigo Rust utilizado para probar
+        los automatas del lexer.
+    */
 
     string codigo = R"(
 
@@ -166,10 +213,35 @@ fn suma(a: i32, b: i32) -> i32 {
 
 fn main() {
 
+    // Variables numericas
+
     let x = 10;
     let y = 20;
 
-    if x < y {
+    let precio = 35.50;
+
+
+    // Booleano
+
+    let activo: bool = true;
+
+
+    // Caracter
+
+    let letra: char = 'A';
+
+
+    // Cadena
+
+    let mensaje: str = "Hola mundo";
+
+
+    /*
+        Prueba de if
+        con comparacion
+    */
+
+    if x < y && activo == true {
 
         let resultado = suma(x, y);
 
@@ -182,32 +254,39 @@ fn main() {
 )";
 
 
-    // Crear el lexer
+    // Crear lexer
 
     Lexer lexer(codigo);
 
 
-    // Analizar el codigo
+    // Analizar codigo
 
-    vector<Token> tokens = lexer.analizar();
+    vector<Token> tokens =
+        lexer.analizar();
 
 
-    // Mostrar los tokens encontrados
+    // Mostrar resultado
 
-    cout << "==============================" << endl;
-    cout << "      ANALIZADOR LEXICO        " << endl;
-    cout << "==============================" << endl;
+    cout << "==========================================" << endl;
+    cout << "           ANALIZADOR LEXICO              " << endl;
+    cout << "==========================================" << endl;
+
     cout << endl;
 
 
     for (const Token& token : tokens) {
 
-        cout << tokenTypeToString(token.tipo);
+        cout
+            << tokenTypeToString(token.tipo);
+
 
         if (!token.lexema.empty()) {
 
-            cout << " -> " << token.lexema;
+            cout
+                << " -> "
+                << token.lexema;
         }
+
 
         cout << endl;
     }

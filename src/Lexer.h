@@ -1,3 +1,4 @@
+
 #ifndef LEXER_H
 #define LEXER_H
 
@@ -15,21 +16,53 @@ private:
     string codigo;
     size_t posicion;
 
-    // Automata de identificadores
+    // -------------------------
+    // Identificadores
+    // -------------------------
+
     bool esInicioIdentificador(char c);
     bool esParteIdentificador(char c);
 
     string leerIdentificador();
 
-    // Automata de numeros
+
+    // -------------------------
+    // Numeros
+    // -------------------------
+
     string leerNumero();
 
-    // Automata de operadores
+
+    // -------------------------
+    // Strings y char
+    // -------------------------
+
+    Token leerCadena();
+    Token leerCaracter();
+
+
+    // -------------------------
+    // Operadores
+    // -------------------------
+
     string leerOperador();
 
-    // Clasificacion de tokens
+
+    // -------------------------
+    // Comentarios
+    // -------------------------
+
+    void saltarComentarioLinea();
+    bool saltarComentarioBloque();
+
+
+    // -------------------------
+    // Clasificacion
+    // -------------------------
+
     Token identificarPalabra(const string& palabra);
     Token identificarOperador(const string& operador);
+
 
 public:
 
